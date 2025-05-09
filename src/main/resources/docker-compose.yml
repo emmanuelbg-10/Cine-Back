@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  cinema:
+    image: postgres
+    volumes:
+      - ./db_data_new:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: cinema
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    depends_on:
+      - cinema
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - "8091:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: 123456
+
+  sonarqube:
+    image: sonarqube:community
+    ports:
+      - "9100:9000"
+    environment:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_extensions:/opt/sonarqube/extensions
+
+volumes:
+  sonarqube_data:
+  sonarqube_logs:
+  sonarqube_extensions:
