@@ -46,7 +46,7 @@ class ReviewComentControllerTest {
 
         when(auth.getName()).thenReturn("test@example.com");
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
-        when(service.addComent(dto, user)).thenReturn(new ReviewComentResponseDTO(1L, "comentario", "usuario", LocalDateTime.now()));
+        when(service.addComent(dto, user)).thenReturn(new ReviewComentResponseDTO(1L, "comentario", "usuario", "usuario@gmail.com", LocalDateTime.now()));
 
         ResponseEntity<ReviewComentResponseDTO> response = controller.addComent(dto, auth);
         assertEquals(200, response.getStatusCodeValue());
@@ -69,7 +69,7 @@ class ReviewComentControllerTest {
 
         when(auth.getName()).thenReturn("test@example.com");
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
-        when(service.updateComent(1L, dto, user)).thenReturn(new ReviewComentResponseDTO(1L, "editado", "usuario", LocalDateTime.now()));
+        when(service.updateComent(1L, dto, user)).thenReturn(new ReviewComentResponseDTO(1L, "editado", "usuario","usuario@gmail.com", LocalDateTime.now()));
 
         var response = controller.updateComent(1L, dto, auth);
         assertEquals(200, response.getStatusCodeValue());
